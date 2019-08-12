@@ -3,6 +3,7 @@
 
 import unittest
 import numpy as np
+import cv2
 from bilinear import bilinear_interpolation, interpolate, get_array_value
 
 
@@ -74,3 +75,10 @@ class TestBilinearInterpolation(unittest.TestCase):
         self.assertEqual(get_array_value(2, 2, self.image), 8)
         self.assertEqual(get_array_value(1, 0, self.image), 1)
         self.assertEqual(get_array_value(0, 1, self.image), 3)
+
+    def test_opencv(self):
+        """Test using opencv resize()"""
+        np.random.seed(1)
+        img_np = np.random.random([3,3])
+        img_cv = cv2.resize(img_np,(2,2), interpolation=cv2.INTER_LINEAR)
+        self.assertEqual(img_cv[0,0], bilinear_interpolation(0.5, 0.5, img_np))
