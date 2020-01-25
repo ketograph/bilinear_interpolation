@@ -16,3 +16,7 @@ Around one pixel to interpolate (`p`) are four pixels `p1, p2, p3, p3`. The pixe
 -p3---p'' ----p4--
   |            |
 ```
+
+An example is given at [Wikipedia](https://en.wikipedia.org/wiki/Bilinear_interpolation#Application_in_image_processing):
+
+![Example for bilinear interpolation](https://upload.wikimedia.org/wikipedia/commons/a/a7/Bilin3.png)
