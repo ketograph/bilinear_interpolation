@@ -3,6 +3,7 @@
 
 import unittest
 import numpy as np
+import cv2
 from bilinear import bilinear_interpolation, interpolate, get_array_value
 
 
@@ -74,3 +75,33 @@ class TestBilinearInterpolation(unittest.TestCase):
         self.assertEqual(get_array_value(2, 2, self.image), 8)
         self.assertEqual(get_array_value(1, 0, self.image), 1)
         self.assertEqual(get_array_value(0, 1, self.image), 3)
+
+    def test_opencv(self):
+        """Test using opencv resize()"""
+        np.random.seed(1)
+        img_np = np.random.random([2, 2])
+        img_np = np.round(np.multiply(img_np, 100))
+        print(img_np)
+        img_cv = cv2.resize(img_np, (3, 3), interpolation=cv2.INTER_LINEAR)
+        print(img_cv)
+
+        self.assertAlmostEqual(img_cv[0, 0], bilinear_interpolation(0, 0, img_np))
+        self.assertAlmostEqual(img_cv[0, 1], bilinear_interpolation(0.5, 0, img_np))
+        self.assertAlmostEqual(img_cv[0, 2], bilinear_interpolation(1, 0, img_np))
+
+        self.assertAlmostEqual(img_cv[1, 0], bilinear_interpolation(0, 0.5, img_np))
+        self.assertAlmostEqual(img_cv[1, 1], bilinear_interpolation(0.5, 0.5, img_np))
+        self.assertAlmostEqual(img_cv[1, 2], bilinear_interpolation(1, 0.5, img_np))
+
+        self.assertAlmostEqual(img_cv[2, 0], bilinear_interpolation(0, 1, img_np))
+        self.assertAlmostEqual(img_cv[2, 1], bilinear_interpolation(0.5, 1, img_np))
+        self.assertAlmostEqual(img_cv[2, 2], bilinear_interpolation(1, 1, img_np))
+
+    def test_wikipedia(self):
+        """Test with example values from Wikipedia 
+
+        https://en.wikipedia.org/wiki/Bilinear_interpolation#Application_in_image_processing"""
+        data = np.array([[91, 210], [162, 95]])
+        self.assertEqual(bilinear_interpolation(0.5, 0, data), 150.5)
+        self.assertEqual(bilinear_interpolation(0.5, 1, data), 128.5)
+        self.assertAlmostEqual(bilinear_interpolation(0.5, 0.2, data), 146.1)
