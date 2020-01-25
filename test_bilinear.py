@@ -82,3 +82,12 @@ class TestBilinearInterpolation(unittest.TestCase):
         img_np = np.random.random([3,3])
         img_cv = cv2.resize(img_np,(2,2), interpolation=cv2.INTER_LINEAR)
         self.assertEqual(img_cv[0,0], bilinear_interpolation(0.5, 0.5, img_np))
+
+    def test_wikipedia(self):
+        """Test with example values from Wikipedia 
+
+        https://en.wikipedia.org/wiki/Bilinear_interpolation#Application_in_image_processing"""
+        data = np.array([[91, 210], [162, 95]])
+        self.assertEqual(bilinear_interpolation(0.5, 0, data), 150.5)
+        self.assertEqual(bilinear_interpolation(0.5, 1, data), 128.5)
+        self.assertAlmostEqual(bilinear_interpolation(0.5, 0.2, data), 146.1)
