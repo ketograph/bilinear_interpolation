@@ -1,5 +1,7 @@
 # Bilinear interpolation
 
+![Travis build status](https://travis-ci.com/ketograph/bilinear_interpolation.svg?branch=master)
+
 This is an simple implementation of the bilinear interpolation for educational purposes.
 
 Around one pixel to interpolate (`p`) are four pixels `p1, p2, p3, p3`. The pixel value `p` can be calculated in two steps:

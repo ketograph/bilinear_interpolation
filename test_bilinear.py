@@ -105,3 +105,4 @@ class TestBilinearInterpolation(unittest.TestCase):
         self.assertEqual(bilinear_interpolation(0.5, 0, data), 150.5)
         self.assertEqual(bilinear_interpolation(0.5, 1, data), 128.5)
         self.assertAlmostEqual(bilinear_interpolation(0.5, 0.2, data), 146.1)
+
